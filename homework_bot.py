@@ -1,7 +1,8 @@
 
 from homerwork1 import AddressBook
 from collections import UserDict
-from datetime import datetime
+from datetime import datetime, timedelta
+# from homerwork1 import get_birthdays_per_week ??
 
 
 class AddressBook(UserDict):
@@ -51,10 +52,13 @@ def show_phone(args, book):
     username = args[0]
     if username in book:
         phone = book[username]
-        return phone
+        if len(phone) == 10 and phone.isdigit():
+            return phone
+        else:
+            return "Invalid phone number format."
     else:
-         return "name was not found" 
-
+         return "Name was not found."
+    
 @input_error    
 def all_contacts(book):
     if not book:
@@ -93,6 +97,36 @@ def show_birthday(args, book):
             return f"{username} does not have a recorded birthday."
     else:
         return f"Contact '{username}' not found." 
+    
+def get_birthdays_per_week(users):
+    today = datetime.today().date()
+    birthday_greet = {}
+    
+    
+    for user in users:
+        name = user["name"]
+        birthday = user["birthday"].date()  # Конвертуємо до типу date*
+        birthday_this_year = birthday.replace(year=today.year)
+        
+        if birthday_this_year < today:
+            birthday_this_year = birthday.replace(year=today.year + 1)
+        delta_days = (birthday_this_year - today).days
+
+        if delta_days < 7:
+            weekday = birthday_this_year.strftime("%A")
+            if weekday in ["Saturday", "Sunday"]:
+                birthday_this_year += timedelta(days=(7 - delta_days))
+
+            if weekday not in birthday_greet:
+                birthday_greet[weekday] = [name]
+            else:
+                birthday_greet[weekday].append(name)
+        
+        formatted_greetings = ""
+        for weekday, names in sorted(birthday_greet.items()):
+            formatted_greetings += f"{weekday}: {', '.join(names)}\n"
+    
+        return formatted_greetings
 
 def main():
     book = AddressBook()
@@ -116,6 +150,8 @@ def main():
             print(add_birthday(args, book))
         elif command == "show-birthday":
             print(show_birthday(args, book))
+        elif command == "birthdays":
+            print(get_birthdays_per_week(args,book))
         elif command == "all":
             print(all_contacts(book))         
         else:

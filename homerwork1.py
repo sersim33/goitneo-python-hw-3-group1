@@ -108,3 +108,24 @@ class AddressBook(UserDict):
             formatted_greetings += f"{weekday}: {', '.join(names)}\n"
     
         return formatted_greetings
+    
+
+
+
+# record1 = Record("John")
+# record1.add_phone(Phone("1234567890"))
+# record1.add_birthday("2000-05-25")
+
+# record2 = Record("Alice")
+# record2.add_phone(Phone("9876543210"))
+# record2.add_birthday("1995-10-15")
+
+# # print(record1,record2)
+
+# address_book = AddressBook()
+# address_book.add_record(record1)
+# address_book.add_record(record2)
+# # print(address_book.data)
+
+# upcoming_birthdays = address_book.get_birthdays_per_week()
+# print(upcoming_birthdays)

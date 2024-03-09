@@ -2,7 +2,8 @@
 from homerwork1 import AddressBook
 from collections import UserDict
 from datetime import datetime, timedelta
-# from homerwork1 import get_birthdays_per_week ??
+from homerwork1 import Record
+# from homerwork1 import get_birthdays_per_week 
 
 
 class AddressBook(UserDict):
@@ -27,12 +28,23 @@ def parse_input(user_input):
     cmd = cmd.strip().lower()
     return cmd, *args
 
+# @input_error
+# def add_contact(args, book):
+#     if len(args) < 2:
+#         return "Please provide both - username and phone number."
+#     name, phone = args
+#     book[name] = phone
+#     return "Contact added."
+
 @input_error
 def add_contact(args, book):
     if len(args) < 2:
         return "Please provide both - username and phone number."
     name, phone = args
-    book[name] = phone
+    record = Record(name)
+    record.add_phone(phone)
+    # book[name] = phone
+    book.add_record(record)
     return "Contact added."
 
 @input_error
@@ -41,10 +53,23 @@ def change_contact(args, book):
         return "Please provide both - username and phone number."
     username, phone = args
     if username in book:
-        book[username] = phone
+        record = book.get(username)
+        current_phone = record.phones[0].value
+        record.edit_phone(current_phone, phone)
         return f"Phone updated for {username}."
     else:
         return f"Contact {username} does not exist."
+
+# @input_error
+# def change_contact(args, book):
+#     if len(args) < 2:
+#         return "Please provide both - username and phone number."
+#     username, phone = args
+#     if username in book:
+#         book[username] = phone
+#         return f"Phone updated for {username}."
+#     else:
+#         return f"Contact {username} does not exist."
     
 @input_error    
 def show_phone(args, book):

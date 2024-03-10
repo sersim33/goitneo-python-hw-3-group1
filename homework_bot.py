@@ -1,6 +1,6 @@
 
 from homerwork1 import AddressBook
-from collections import UserDict
+from collections import UserDict,defaultdict
 from datetime import datetime, timedelta
 from homerwork1 import Record
 
@@ -56,7 +56,6 @@ def change_contact(args, book):
     
 @input_error    
 def show_phone(args, book):
-    #"phone username" За цією командою бот виводить у консоль номер телефону для зазначеного контакту username.
     username = args[0]
     if username in book:
         phone = book[username]
@@ -111,34 +110,15 @@ def show_birthday(args, book):
 @input_error    
 def get_birthdays_per_week(users):
     pass
+    # result_dict = defaultdict(list)
     # today = datetime.today().date()
-    # birthday_greet = {}
-    
-    
-    # for user in users:
-    #     name = user["name"]
-    #     birthday = user["birthday"].date()  # Конвертуємо до типу date*
-    #     birthday_this_year = birthday.replace(year=today.year)
-        
-    #     if birthday_this_year < today:
-    #         birthday_this_year = birthday.replace(year=today.year + 1)
-    #     delta_days = (birthday_this_year - today).days
-
-    #     if delta_days < 7:
-    #         weekday = birthday_this_year.strftime("%A")
-    #         if weekday in ["Saturday", "Sunday"]:
-    #             birthday_this_year += timedelta(days=(7 - delta_days))
-
-    #         if weekday not in birthday_greet:
-    #             birthday_greet[weekday] = [name]
-    #         else:
-    #             birthday_greet[weekday].append(name)
-        
-    #     formatted_greetings = ""
-    #     for weekday, names in sorted(birthday_greet.items()):
-    #         formatted_greetings += f"{weekday}: {', '.join(names)}\n"
-    
-    #     return formatted_greetings
+    # for name, record in self.data.items():
+    #     if record.birthday:
+    #         birthday_date = datetime.strptime(record.birthday.value, '%d.%m.%Y').date()
+    #         if today <= birthday_date <= today + timedelta(days=7):
+    #             weekday = birthday_date.strftime('%A')
+    #             result_dict[weekday].append(name)
+    # return result_dict
 
 def main():
     book = AddressBook()

@@ -1,4 +1,4 @@
-from collections import UserDict
+from collections import UserDict,defaultdict
 from datetime import datetime, timedelta
 
 
@@ -81,35 +81,44 @@ class AddressBook(UserDict):
         else:
             return f"Contact '{name}' not found."
         
-    def get_birthdays_per_week(users):
+    def get_birthdays_per_week(self):
+        result_dict = defaultdict(list)
         today = datetime.today().date()
-        birthday_greet = {}
+        for name, record in self.data.items():
+            if record.birthday:
+                birthday_date = datetime.strptime(record.birthday.value, '%d.%m.%Y').date()
+                if today <= birthday_date <= today + timedelta(days=7):
+                    weekday = birthday_date.strftime('%A')
+                    result_dict[weekday].append(name)
+        return result_dict
+        # today = datetime.today().date()
+        # birthday_greet = {}
     
     
-        for user in users:
-            name = user["name"]
-            birthday = user["birthday"].date()  # Конвертуємо до типу date*
-            birthday_this_year = birthday.replace(year=today.year)
+        # for user in users:
+        #     name = user["name"]
+        #     birthday = user["birthday"].date()  # Конвертуємо до типу date*
+        #     birthday_this_year = birthday.replace(year=today.year)
         
-        if birthday_this_year < today:
-            birthday_this_year = birthday.replace(year=today.year + 1)
-        delta_days = (birthday_this_year - today).days
+        # if birthday_this_year < today:
+        #     birthday_this_year = birthday.replace(year=today.year + 1)
+        # delta_days = (birthday_this_year - today).days
 
-        if delta_days < 7:
-            weekday = birthday_this_year.strftime("%A")
-            if weekday in ["Saturday", "Sunday"]:
-                birthday_this_year += timedelta(days=(7 - delta_days))
+        # if delta_days < 7:
+        #     weekday = birthday_this_year.strftime("%A")
+        #     if weekday in ["Saturday", "Sunday"]:
+        #         birthday_this_year += timedelta(days=(7 - delta_days))
 
-            if weekday not in birthday_greet:
-                birthday_greet[weekday] = [name]
-            else:
-                birthday_greet[weekday].append(name)
+        #     if weekday not in birthday_greet:
+        #         birthday_greet[weekday] = [name]
+        #     else:
+        #         birthday_greet[weekday].append(name)
         
-        formatted_greetings = ""
-        for weekday, names in sorted(birthday_greet.items()):
-            formatted_greetings += f"{weekday}: {', '.join(names)}\n"
+        # formatted_greetings = ""
+        # for weekday, names in sorted(birthday_greet.items()):
+        #     formatted_greetings += f"{weekday}: {', '.join(names)}\n"
     
-        return formatted_greetings
+        # return formatted_greetings
     
 
 

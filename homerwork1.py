@@ -20,18 +20,20 @@ class Phone(Field):
             raise ValueError
     
 class Birthday(Field):
-    def __init__(self, value):
-        try:
-            datetime.strptime(value, '%Y-%m-%d')
-        except ValueError:
-            raise ValueError("Incorrect date format, should be YYYY-MM-DD")
-        super().__init__(value)
+    def __init__(self, birthday):
+        self.value = birthday
+    # def __init__(self, value):
+    #     try:
+    #         datetime.strptime(value, '%Y-%m-%d')
+    #     except ValueError:
+    #         raise ValueError("Incorrect date format, should be YYYY-MM-DD")
+    #     super().__init__(value)
 
 class Record:
-    def __init__(self, name):
+    def __init__(self, name, birthday=None):
         self.name = Name(name)
         self.phones = []
-        self.birthday = None
+        self.birthday = Birthday(birthday) if birthday else None
 
     def add_phone(self, phone):
         self.phones.append(phone)

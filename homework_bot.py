@@ -95,7 +95,8 @@ def add_birthday(args, book):
         return f"Birthday added for {username}."
     else:
         return f"Contact {username} does not exist." 
-
+    
+@input_error
 def show_birthday(args, book):
     username = args[0]
     if username in book:
@@ -107,6 +108,7 @@ def show_birthday(args, book):
     else:
         return f"Contact '{username}' not found." 
     
+@input_error    
 def get_birthdays_per_week(users):
     pass
     # today = datetime.today().date()

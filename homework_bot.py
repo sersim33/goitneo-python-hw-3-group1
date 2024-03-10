@@ -108,17 +108,9 @@ def show_birthday(args, book):
         return f"Contact '{username}' not found." 
     
 @input_error    
-def get_birthdays_per_week(users):
-    pass
-    # result_dict = defaultdict(list)
-    # today = datetime.today().date()
-    # for name, record in self.data.items():
-    #     if record.birthday:
-    #         birthday_date = datetime.strptime(record.birthday.value, '%d.%m.%Y').date()
-    #         if today <= birthday_date <= today + timedelta(days=7):
-    #             weekday = birthday_date.strftime('%A')
-    #             result_dict[weekday].append(name)
-    # return result_dict
+def get_birthdays_per_week(args, book):
+    return book.get_birthdays_per_week()
+    
 
 def main():
     book = AddressBook()

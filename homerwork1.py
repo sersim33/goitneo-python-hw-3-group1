@@ -86,11 +86,13 @@ class AddressBook(UserDict):
         today = datetime.today().date()
         for name, record in self.data.items():
             if record.birthday:
-                birthday_date = datetime.strptime(record.birthday.value, '%d.%m.%Y').date()
+                birthday_date = record.birthday.value
                 if today <= birthday_date <= today + timedelta(days=7):
                     weekday = birthday_date.strftime('%A')
                     result_dict[weekday].append(name)
         return result_dict
+    
+
         # today = datetime.today().date()
         # birthday_greet = {}
     

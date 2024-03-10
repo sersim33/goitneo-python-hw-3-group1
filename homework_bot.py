@@ -3,11 +3,11 @@ from homerwork1 import AddressBook
 from collections import UserDict
 from datetime import datetime, timedelta
 from homerwork1 import Record
-# from homerwork1 import get_birthdays_per_week 
 
 
-class AddressBook(UserDict):
-    pass
+
+# class AddressBook(UserDict):
+#     pass
 
 def input_error(func):
     def inner(*args, **kwargs):
@@ -28,13 +28,6 @@ def parse_input(user_input):
     cmd = cmd.strip().lower()
     return cmd, *args
 
-# @input_error
-# def add_contact(args, book):
-#     if len(args) < 2:
-#         return "Please provide both - username and phone number."
-#     name, phone = args
-#     book[name] = phone
-#     return "Contact added."
 
 @input_error
 def add_contact(args, book):
@@ -60,16 +53,6 @@ def change_contact(args, book):
     else:
         return f"Contact {username} does not exist."
 
-# @input_error
-# def change_contact(args, book):
-#     if len(args) < 2:
-#         return "Please provide both - username and phone number."
-#     username, phone = args
-#     if username in book:
-#         book[username] = phone
-#         return f"Phone updated for {username}."
-#     else:
-#         return f"Contact {username} does not exist."
     
 @input_error    
 def show_phone(args, book):
@@ -104,10 +87,11 @@ def add_birthday(args, book):
         birthday = datetime.strptime(birthday_str, "%d.%m.%Y").date()
     except ValueError:
         return "Invalid date format. Please use DD.MM.YYYY."
-
+    
     if username in book:
         contact = book[username]
         contact.add_birthday(birthday)
+        book.add_record(contact)  # Update the record in the address book
         return f"Birthday added for {username}."
     else:
         return f"Contact {username} does not exist." 
@@ -124,34 +108,35 @@ def show_birthday(args, book):
         return f"Contact '{username}' not found." 
     
 def get_birthdays_per_week(users):
-    today = datetime.today().date()
-    birthday_greet = {}
+    pass
+    # today = datetime.today().date()
+    # birthday_greet = {}
     
     
-    for user in users:
-        name = user["name"]
-        birthday = user["birthday"].date()  # Конвертуємо до типу date*
-        birthday_this_year = birthday.replace(year=today.year)
+    # for user in users:
+    #     name = user["name"]
+    #     birthday = user["birthday"].date()  # Конвертуємо до типу date*
+    #     birthday_this_year = birthday.replace(year=today.year)
         
-        if birthday_this_year < today:
-            birthday_this_year = birthday.replace(year=today.year + 1)
-        delta_days = (birthday_this_year - today).days
+    #     if birthday_this_year < today:
+    #         birthday_this_year = birthday.replace(year=today.year + 1)
+    #     delta_days = (birthday_this_year - today).days
 
-        if delta_days < 7:
-            weekday = birthday_this_year.strftime("%A")
-            if weekday in ["Saturday", "Sunday"]:
-                birthday_this_year += timedelta(days=(7 - delta_days))
+    #     if delta_days < 7:
+    #         weekday = birthday_this_year.strftime("%A")
+    #         if weekday in ["Saturday", "Sunday"]:
+    #             birthday_this_year += timedelta(days=(7 - delta_days))
 
-            if weekday not in birthday_greet:
-                birthday_greet[weekday] = [name]
-            else:
-                birthday_greet[weekday].append(name)
+    #         if weekday not in birthday_greet:
+    #             birthday_greet[weekday] = [name]
+    #         else:
+    #             birthday_greet[weekday].append(name)
         
-        formatted_greetings = ""
-        for weekday, names in sorted(birthday_greet.items()):
-            formatted_greetings += f"{weekday}: {', '.join(names)}\n"
+    #     formatted_greetings = ""
+    #     for weekday, names in sorted(birthday_greet.items()):
+    #         formatted_greetings += f"{weekday}: {', '.join(names)}\n"
     
-        return formatted_greetings
+    #     return formatted_greetings
 
 def main():
     book = AddressBook()
